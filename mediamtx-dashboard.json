@@ -1,0 +1,1652 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "MediaMTX media server monitoring — paths, RTSP, WebRTC, HLS, RTMP, SRT",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 2,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 100,
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "mappings": [
+            { "options": { "0": { "text": "Down", "color": "red" }, "1": { "text": "Up", "color": "green" } }, "type": "value" }
+          ]
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
+      "id": 1,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "MediaMTX Status",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "up{job=~\"$job\"}",
+          "legendFormat": "{{ instance }}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "Active Paths",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "count(paths{job=~\"$job\", state=\"ready\"})",
+          "legendFormat": "paths",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 50 },
+              { "color": "red", "value": 100 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "RTSP Sessions",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "count(rtsp_sessions{job=~\"$job\"}) or vector(0)",
+          "legendFormat": "sessions",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "purple", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+      "id": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "WebRTC Sessions",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "count(webrtc_sessions{job=~\"$job\"}) or vector(0)",
+          "legendFormat": "sessions",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "orange", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "id": 5,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "HLS Muxers",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "count(hls_muxers{job=~\"$job\"}) or vector(0)",
+          "legendFormat": "muxers",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "semi-dark-yellow", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+      "id": 6,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "textMode": "auto"
+      },
+      "title": "RTMP Connections",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "count(rtmp_conns{job=~\"$job\"}) or vector(0)",
+          "legendFormat": "conns",
+          "refId": "A"
+        }
+      ]
+    },
+
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "id": 101,
+      "title": "Paths — Bandwidth & Readers",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisLabel": "",
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "id": 10,
+      "options": {
+        "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Ingest Bitrate per Path (Received)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "rate(paths_bytes_received{job=~\"$job\", name=~\"$path\"}[$__rate_interval]) * 8",
+          "legendFormat": "{{ name }}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisLabel": "",
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "scheme",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+      "id": 11,
+      "options": {
+        "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Output Bitrate per Path (Sent)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "rate(paths_bytes_sent{job=~\"$job\", name=~\"$path\"}[$__rate_interval]) * 8",
+          "legendFormat": "{{ name }}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisLabel": "",
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "normal" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "id": 12,
+      "options": {
+        "legend": { "calcs": ["lastNotNull"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Readers per Path",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "paths_readers{job=~\"$job\", name=~\"$path\"}",
+          "legendFormat": "{{ name }}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "${datasource}" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisLabel": "",
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": { "group": "A", "mode": "none" },
+            "thresholdsStyle": { "mode": "off" }
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+      "id": 13,
+      "options": {
+        "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
+      },
+      "title": "Total Bandwidth (All Paths)",
+      "type": "timeseries",
+      "targets": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "sum(rate(paths_bytes_received{job=~\"$job\"}[$__rate_interval])) * 8",
+          "legendFormat": "Total Received",
+          "refId": "A"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "expr": "sum(rate(paths_bytes_sent{job=~\"$job\"}[$__rate_interval])) * 8",
+          "legendFormat": "Total Sent",
+          "refId": "B"
+        }
+      ]
+    },
+
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 22 },
+      "id": 102,
+      "title": "RTSP Sessions",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 15,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "short",
+              "decimals": 0
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 23 },
+          "id": 20,
+          "options": {
+            "legend": { "calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTSP Sessions Count",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(rtsp_sessions{job=~\"$job\", state=\"read\"}) or vector(0)",
+              "legendFormat": "Readers",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(rtsp_sessions{job=~\"$job\", state=\"publish\"}) or vector(0)",
+              "legendFormat": "Publishers",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 23 },
+          "id": 21,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTSP Bandwidth per Session",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "rate(rtsp_sessions_bytes_received{job=~\"$job\"}[$__rate_interval]) * 8",
+              "legendFormat": "recv {{ path }}",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "rate(rtsp_sessions_bytes_sent{job=~\"$job\"}[$__rate_interval]) * 8",
+              "legendFormat": "sent {{ path }}",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "pps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 30 },
+          "id": 22,
+          "options": {
+            "legend": { "calcs": ["mean", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTSP RTP Packets Rate",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsp_sessions_rtp_packets_received{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "RTP Received",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsp_sessions_rtp_packets_sent{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "RTP Sent",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 30,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "pps",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 10 },
+                  { "color": "red", "value": 100 }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 30 },
+          "id": 23,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTSP Packet Loss & Errors",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsp_sessions_rtp_packets_lost{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "RTP Lost",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsp_sessions_rtp_packets_in_error{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "RTP Errors",
+              "refId": "B"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsp_sessions_rtcp_packets_in_error{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "RTCP Errors",
+              "refId": "C"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "s"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 37 },
+          "id": 24,
+          "options": {
+            "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTSP RTP Jitter",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "rtsp_sessions_rtp_packets_jitter{job=~\"$job\"}",
+              "legendFormat": "{{ path }} ({{ remoteAddr }})",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 1 },
+                  { "color": "red", "value": 5 }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 37 },
+          "id": 25,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+            "textMode": "auto"
+          },
+          "title": "RTSP Packet Loss Rate (%)",
+          "type": "stat",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsp_sessions_rtp_packets_lost{job=~\"$job\"}[$__rate_interval])) / (sum(rate(rtsp_sessions_rtp_packets_received{job=~\"$job\"}[$__rate_interval])) + sum(rate(rtsp_sessions_rtp_packets_sent{job=~\"$job\"}[$__rate_interval])) + 1)",
+              "legendFormat": "Loss Rate",
+              "refId": "A"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 23 },
+      "id": 103,
+      "title": "WebRTC Sessions",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 15,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "short",
+              "decimals": 0
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 8, "x": 0, "y": 24 },
+          "id": 30,
+          "options": {
+            "legend": { "calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "WebRTC Sessions Count",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(webrtc_sessions{job=~\"$job\", state=\"read\"}) or vector(0)",
+              "legendFormat": "Readers",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(webrtc_sessions{job=~\"$job\", state=\"publish\"}) or vector(0)",
+              "legendFormat": "Publishers",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 8, "x": 8, "y": 24 },
+          "id": 31,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "WebRTC Bandwidth",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(webrtc_sessions_bytes_received{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "Received",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(webrtc_sessions_bytes_sent{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "Sent",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 30,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "pps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 8, "x": 16, "y": 24 },
+          "id": 32,
+          "options": {
+            "legend": { "calcs": ["mean", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "WebRTC RTP Packets & Loss",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(webrtc_sessions_rtp_packets_received{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "RTP Received",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(webrtc_sessions_rtp_packets_sent{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "RTP Sent",
+              "refId": "B"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(webrtc_sessions_rtp_packets_lost{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "RTP Lost",
+              "refId": "C"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 24 },
+      "id": 104,
+      "title": "HLS Streaming",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 15,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "short",
+              "decimals": 0
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 25 },
+          "id": 40,
+          "options": {
+            "legend": { "calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "HLS Active Muxers",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(hls_muxers{job=~\"$job\"}) or vector(0)",
+              "legendFormat": "Active Muxers",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 25 },
+          "id": 41,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "HLS Output Bitrate per Muxer",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "rate(hls_muxers_bytes_sent{job=~\"$job\"}[$__rate_interval]) * 8",
+              "legendFormat": "{{ name }}",
+              "refId": "A"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 25 },
+      "id": 105,
+      "title": "RTMP / RTMPS Connections",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 15,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "short",
+              "decimals": 0
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 26 },
+          "id": 50,
+          "options": {
+            "legend": { "calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTMP Connections",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(rtmp_conns{job=~\"$job\", state=\"read\"}) or vector(0)",
+              "legendFormat": "RTMP Readers",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(rtmp_conns{job=~\"$job\", state=\"publish\"}) or vector(0)",
+              "legendFormat": "RTMP Publishers",
+              "refId": "B"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(rtmps_conns{job=~\"$job\"}) or vector(0)",
+              "legendFormat": "RTMPS Total",
+              "refId": "C"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 26 },
+          "id": 51,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTMP Bandwidth",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtmp_conns_bytes_received{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "RTMP Received",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtmp_conns_bytes_sent{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "RTMP Sent",
+              "refId": "B"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtmps_conns_bytes_received{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "RTMPS Received",
+              "refId": "C"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtmps_conns_bytes_sent{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "RTMPS Sent",
+              "refId": "D"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 26 },
+      "id": 106,
+      "title": "SRT Connections (Advanced)",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 15,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "short",
+              "decimals": 0
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 8, "x": 0, "y": 27 },
+          "id": 60,
+          "options": {
+            "legend": { "calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "SRT Connections Count",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(srt_conns{job=~\"$job\", state=\"read\"}) or vector(0)",
+              "legendFormat": "Readers",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(srt_conns{job=~\"$job\", state=\"publish\"}) or vector(0)",
+              "legendFormat": "Publishers",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 8, "x": 8, "y": 27 },
+          "id": 61,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "SRT Bandwidth",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(srt_conns_bytes_received{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "Received",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(srt_conns_bytes_sent{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "Sent",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "s"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 8, "x": 16, "y": 27 },
+          "id": 62,
+          "options": {
+            "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "SRT Round-Trip Time (RTT)",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "srt_conns_rtt{job=~\"$job\"} / 1000",
+              "legendFormat": "{{ path }} ({{ remoteAddr }})",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 30,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "pps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 34 },
+          "id": 63,
+          "options": {
+            "legend": { "calcs": ["mean", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "SRT Packet Loss & Retransmission",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(srt_conns_packets_loss{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "Packet Loss",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(srt_conns_packets_retransmission{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "Retransmission",
+              "refId": "B"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(srt_conns_packets_drop{job=~\"$job\"}[$__rate_interval]))",
+              "legendFormat": "Drops",
+              "refId": "C"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 34 },
+          "id": 64,
+          "options": {
+            "legend": { "calcs": ["mean", "max"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "SRT Send/Receive Rate & Link Capacity",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "srt_conns_send_rate{job=~\"$job\"}",
+              "legendFormat": "Send Rate {{ path }}",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "srt_conns_recv_rate{job=~\"$job\"}",
+              "legendFormat": "Recv Rate {{ path }}",
+              "refId": "B"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "srt_conns_max_bandwidth{job=~\"$job\"}",
+              "legendFormat": "Link Capacity {{ path }}",
+              "refId": "C"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 27 },
+      "id": 107,
+      "title": "RTSP Connections (Low-level)",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "short",
+              "decimals": 0
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 28 },
+          "id": 70,
+          "options": {
+            "legend": { "calcs": ["lastNotNull"], "displayMode": "list", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTSP/RTSPS TCP Connections",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(rtsp_conns{job=~\"$job\"}) or vector(0)",
+              "legendFormat": "RTSP Conns",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "count(rtsps_conns{job=~\"$job\"}) or vector(0)",
+              "legendFormat": "RTSPS Conns",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "palette-classic" },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisLabel": "",
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "scheme",
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": { "group": "A", "mode": "none" },
+                "thresholdsStyle": { "mode": "off" }
+              },
+              "unit": "Bps"
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 28 },
+          "id": 71,
+          "options": {
+            "legend": { "calcs": ["mean", "max", "lastNotNull"], "displayMode": "table", "placement": "bottom" },
+            "tooltip": { "mode": "multi", "sort": "desc" }
+          },
+          "title": "RTSP/RTSPS Connection Bandwidth",
+          "type": "timeseries",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsp_conns_bytes_received{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "RTSP Recv",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsp_conns_bytes_sent{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "RTSP Sent",
+              "refId": "B"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsps_conns_bytes_received{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "RTSPS Recv",
+              "refId": "C"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "sum(rate(rtsps_conns_bytes_sent{job=~\"$job\"}[$__rate_interval])) * 8",
+              "legendFormat": "RTSPS Sent",
+              "refId": "D"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 28 },
+      "id": 108,
+      "title": "Paths Table",
+      "type": "row",
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "${datasource}" },
+          "fieldConfig": {
+            "defaults": {
+              "color": { "mode": "thresholds" },
+              "custom": {
+                "align": "auto",
+                "cellOptions": { "type": "auto" },
+                "inspect": false
+              },
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  { "color": "green", "value": null }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": { "id": "byName", "options": "name" },
+                "properties": [{ "id": "custom.width", "value": 200 }]
+              },
+              {
+                "matcher": { "id": "byName", "options": "state" },
+                "properties": [
+                  { "id": "custom.width", "value": 100 },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      { "options": { "ready": { "color": "green", "text": "Ready" }, "notReady": { "color": "red", "text": "Not Ready" } }, "type": "value" }
+                    ]
+                  },
+                  { "id": "custom.cellOptions", "value": { "type": "color-text" } }
+                ]
+              },
+              {
+                "matcher": { "id": "byName", "options": "Received Rate" },
+                "properties": [{ "id": "unit", "value": "Bps" }]
+              },
+              {
+                "matcher": { "id": "byName", "options": "Sent Rate" },
+                "properties": [{ "id": "unit", "value": "Bps" }]
+              },
+              {
+                "matcher": { "id": "byName", "options": "Readers" },
+                "properties": [{ "id": "unit", "value": "short" }]
+              }
+            ]
+          },
+          "gridPos": { "h": 8, "w": 24, "x": 0, "y": 29 },
+          "id": 80,
+          "options": {
+            "showHeader": true,
+            "sortBy": [{ "desc": true, "displayName": "Readers" }],
+            "cellHeight": "sm",
+            "footer": { "show": true, "reducer": ["sum"], "countRows": false }
+          },
+          "title": "All Paths Status",
+          "type": "table",
+          "targets": [
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "paths{job=~\"$job\", name=~\"$path\"}",
+              "format": "table",
+              "instant": true,
+              "legendFormat": "",
+              "refId": "A"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "rate(paths_bytes_received{job=~\"$job\", name=~\"$path\"}[5m]) * 8",
+              "format": "table",
+              "instant": true,
+              "legendFormat": "",
+              "refId": "B"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "rate(paths_bytes_sent{job=~\"$job\", name=~\"$path\"}[5m]) * 8",
+              "format": "table",
+              "instant": true,
+              "legendFormat": "",
+              "refId": "C"
+            },
+            {
+              "datasource": { "type": "prometheus", "uid": "${datasource}" },
+              "expr": "paths_readers{job=~\"$job\", name=~\"$path\"}",
+              "format": "table",
+              "instant": true,
+              "legendFormat": "",
+              "refId": "D"
+            }
+          ],
+          "transformations": [
+            {
+              "id": "merge",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": true,
+                  "__name__": true,
+                  "instance": true,
+                  "job": true,
+                  "Value #A": true
+                },
+                "renameByName": {
+                  "name": "Path",
+                  "state": "State",
+                  "Value #B": "Received Rate",
+                  "Value #C": "Sent Rate",
+                  "Value #D": "Readers"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": ["mediamtx", "streaming", "nvr", "cameracloud"],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {},
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "definition": "label_values(paths, job)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Job",
+        "multi": true,
+        "name": "job",
+        "options": [],
+        "query": { "qryType": 1, "query": "label_values(paths, job)", "refId": "PrometheusVariableQueryEditor-VariableQuery" },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": { "type": "prometheus", "uid": "${datasource}" },
+        "definition": "label_values(paths{job=~\"$job\"}, name)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Path",
+        "multi": true,
+        "name": "path",
+        "options": [],
+        "query": { "qryType": 1, "query": "label_values(paths{job=~\"$job\"}, name)", "refId": "PrometheusVariableQueryEditor-VariableQuery" },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {
+    "refresh_intervals": ["5s", "10s", "30s", "1m", "5m"],
+    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d"]
+  },
+  "timezone": "browser",
+  "title": "MediaMTX — CameraCloud NVR",
+  "uid": "mediamtx-cameracloud-nvr",
+  "version": 1
+}
