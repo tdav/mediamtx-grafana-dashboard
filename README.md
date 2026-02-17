@@ -2,7 +2,7 @@
 
 Comprehensive Grafana dashboard for monitoring [MediaMTX](https://github.com/bluenviron/mediamtx) media server with 100% metric coverage.
 
-![MediaMTX — CameraCloud NVR V3](images/MediaMTX — CameraCloud NVR V3.png)
+![MediaMTX — CameraCloud NVR V3](MediaMTX%20—%20CameraCloud%20NVR%20V3.png)
 
 
 ## Overview
